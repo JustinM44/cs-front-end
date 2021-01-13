@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {RouterModule} from '@angular/router'
+import {RouterModule, Router} from '@angular/router'
+import { UserDataService } from './Services/UserData.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,13 @@ import {RouterModule} from '@angular/router'
 })
 export class AppComponent {
   title = 'movie-review';
+  constructor(public userData: UserDataService){}
+  ngOninit():void {
 
-  ngOninit():void {}
+  }
+
+  logout(){
+    sessionStorage.clear();
+    location.reload();
+  }
 }

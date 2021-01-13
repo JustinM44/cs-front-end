@@ -8,10 +8,10 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
+loginresponse
 constructor(private http: HttpClient, public userData: UserDataService) { }
 
-login(loginBody): Observable<any> {
-  return this.http.post<any>('http://localhost:8080/login', loginBody).pipe(map(result => result))
+login(loginBody) {
+  return this.http.post<any>('http://localhost:8080/login', loginBody)
 }
 }

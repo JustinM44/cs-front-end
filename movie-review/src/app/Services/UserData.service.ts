@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserDataService {
-private userName: string;
-private userId: number;
-private userRole: string;
+public userName: string;
+public userId: number;
+public userRole: string;
 
-constructor() { }
+constructor() {
+ }
 
 getUserName(): string{
   return this.userName;
