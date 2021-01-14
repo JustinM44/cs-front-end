@@ -42,7 +42,7 @@ import { RaitingComponent } from './Components/raiting/raiting.component';
     MatIconModule,
     MatGridListModule
   ],
-  providers: [UserDataService, ],
+  providers: [UserDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,7 @@ import { CommentReviewService } from 'src/app/Services/CommentReview.service';
 export class RaitingComponent implements OnInit {
   @Input() comment;
   @Output() private ratingUpdated = new EventEmitter();
+  @Output() private childComunicator = new EventEmitter();
   @Input() addComment: boolean;
   @Input() movieId;
 
@@ -20,6 +21,7 @@ export class RaitingComponent implements OnInit {
   isUpdated;
   commentText: string;
   currentTextLength: number;
+  isAdded: boolean;
   
 
   MAX_STARS=5;
@@ -52,15 +54,39 @@ export class RaitingComponent implements OnInit {
   }
 
   updateComment(): void{
-    this.commentService.updateCommentReview(this.comment).subscribe(res => {console.log(res)}, (error) => {console.log(error)}).unsubscribe();
+    let update = this.commentService.updateCommentReview(this.comment).subscribe(res => {console.log(res)}, (error) => {
+    if(error.status === 200) {
+      return;
+    }
+    else {
+      console.log(error);
+      }
+    });
     this.isUpdated=false;
+    
   }
 
   saveCommentRaiting(formInput): void{
     this.comment.comment = formInput;
-    // let newComment = JSON.stringify(this.comment);
-    this.commentService.addCommentReview(this.comment).subscribe(res => {console.log(res)}, (error) => {console.log(error)}).unsubscribe();
-    this.addComment = false;
+    this.commentService.addCommentReview(this.comment).subscribe(res => res, (error) => {
+      if(error.status === 200) {
+        return;
+      }
+      else {
+        console.log(error);
+      }
+    });
+      this.messageParent()
+  }
+
+  messageParent(){
+    this.comment.user.username = sessionStorage.getItem('userName');
+    this.addComment = false
+    let parentMessage = {
+      comment: this.comment,
+      closeAdd: !this.addComment
+    };
+    this.childComunicator.emit(parentMessage);
   }
 
   calculateTextLength(length): void{
