@@ -1,0 +1,26 @@
+<div *ngIf="addComment">
+  <input style="width: 65%;" #commentInput maxlength=255 (keyup)="calculateTextLength(commentInput.value.length)" > {{currentTextLength}}/255
+  <div>
+    <button mat-icon-button  *ngFor="let rating of ratingsArray;index as i" (click)="updateRating(i)">
+      <mat-icon *ngIf="comment.raiting > i" color="accent">
+        star
+      </mat-icon>
+      <mat-icon *ngIf="comment.raiting <= i" color="accent">
+        star_border
+      </mat-icon>
+    </button>
+  <button mat-button *ngIf="addComment" type="submit" (click)="saveCommentRaiting(commentInput.value)">Submit</button>
+  </div>
+</div>
+<div *ngIf="!addComment">
+  <button mat-icon-button  *ngFor="let rating of ratingsArray;index as i" (click)="updateRating(i)" [disabled]="comment.user.id!=currentUser">
+  <mat-icon *ngIf="comment.raiting > i" color="accent">
+    star
+  </mat-icon>
+  <mat-icon *ngIf="comment.raiting <= i" color="accent">
+    star_border
+  </mat-icon>
+</button>
+<button mat-button *ngIf="isUpdated && !addComment" (click)="updateComment(comment)">Submit</button>
+</div>
+

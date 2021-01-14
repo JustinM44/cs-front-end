@@ -1,9 +1,26 @@
 mat-card{
-    max-width: 400px;
+    max-width: 70%;
 }
 
-.column {
-    float: left;
-    padding-left: 50px;
-    padding-right:50px;
+.movieCard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width:75%;
 }
+
+.container{
+     display: flex;
+    align-items: stretch;
+    align-self: center;
+    justify-content: space-around;
+}
+
+#content{
+    overflow: hidden;
+    width:100%;
+    padding-top: 1%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    }

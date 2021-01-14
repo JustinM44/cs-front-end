@@ -15,14 +15,17 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list'
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { RaitingComponent } from './Components/raiting/raiting.component';
 
 @NgModule({
   declarations: [			
     AppComponent,
       LoginComponent,
       MoviereviewComponent,
-      MovieDetailsComponent
+      MovieDetailsComponent,
+      RaitingComponent
    ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ],
   providers: [UserDataService, ],
   bootstrap: [AppComponent]

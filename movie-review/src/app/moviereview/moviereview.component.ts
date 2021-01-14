@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../Services/UserData.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-moviereview',
@@ -19,7 +20,7 @@ export class MoviereviewComponent implements OnInit {
     console.log('userId: ', this.userData.getUserId())
     if(this.userData.getUserRole()){
       // TODO MOVE TO SERVICE
-      this.http.get<any>('http://localhost:8080/getMovies').subscribe(res => { 
+      this.http.get<any>(environment.api+environment.paths.movieController.movieList).subscribe(res => { 
         console.log(res);
         this.movieList = res;
         console.log(this.movieList)
