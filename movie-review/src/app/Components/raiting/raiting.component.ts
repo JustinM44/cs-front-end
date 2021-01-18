@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { CommentReviewService } from 'src/app/Services/CommentReview.service';
+import { UserDataService } from 'src/app/Services/UserData.service';
 
 @Component({
   selector: 'app-raiting',
@@ -14,27 +15,37 @@ export class RaitingComponent implements OnInit {
   @Output() private childComunicator = new EventEmitter();
   @Input() addComment: boolean;
   @Input() movieId;
+  @Input() userData: UserDataService;
 
   addCommentForm: FormGroup;
 
   currentUser: number = Number.parseInt(sessionStorage.getItem('userId'));
   isUpdated;
+  isEditing: boolean;
   commentText: string;
   currentTextLength: number;
   isAdded: boolean;
+
+  oldComment: string;
+  oldRaiting: number;
   
 
   MAX_STARS=5;
   ratingsArray = [];
 
-  constructor(private commentService: CommentReviewService) { }
+  constructor(private commentService: CommentReviewService) {
+    this.isEditing=false;
+   }
 
   ngOnInit() {
     this.currentTextLength = 0;
+    this.oldComment = this.comment.comment;
+    this.oldRaiting = this.comment.raiting;
+    
     if(this.addComment){
       this.comment = {
         "user": {
-          "id": Number.parseInt(sessionStorage.getItem('userId'))
+          "id": this.userData.getUserId()
         },
         "raiting": 0,
         "movieid": Number.parseInt(this.movieId),
@@ -80,7 +91,8 @@ export class RaitingComponent implements OnInit {
   }
 
   messageParent(){
-    this.comment.user.username = sessionStorage.getItem('userName');
+    console.log('Messaging userName: ', this.userData.userName)
+    this.comment.user.username = this.userData.getUserName();
     this.addComment = false
     let parentMessage = {
       comment: this.comment,
@@ -92,5 +104,40 @@ export class RaitingComponent implements OnInit {
   calculateTextLength(length): void{
     this.currentTextLength = length;
     this.ratingUpdated.emit(this.currentTextLength)
+  }
+  
+  getTextColor(comment){
+    if(comment.raiting > 3){
+      return 'gold';
+    } else if (comment.raiting <= 3 && comment.raiting > 1){
+      return "green";
+    } else {
+      return "red";
+    }
+  }
+
+  getRaitingText(comment){
+    if(comment.raiting > 3){
+      
+      return 'Great';
+    } else if (comment.raiting <= 3 && comment.raiting > 1){
+      return "Okay";
+    } else {
+      return "Poor";
+    }
+  }
+
+  cancelEdit(){
+    location.reload();
+  }
+
+  setIsEditing(){
+    this.isEditing = !this.isEditing;
+  }
+
+  editCommentText(commentText){
+    this.comment.comment = commentText;
+    this.updateComment();
+    this.isEditing=false;
   }
 }

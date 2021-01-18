@@ -15,13 +15,12 @@ export class MovieDetailsComponent implements OnInit {
   movieId: number;
   movieDetails;
   AddComment: boolean;
+  isLoading: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, public userData:UserDataService) {}
 
   ngOnInit() {
-    this.userData.setUserId(Number.parseInt(sessionStorage.getItem('userId')));
-    this.userData.setUserName(sessionStorage.getItem('userName'));
-
+    this.setData();
     this.AddComment = false;
     this.movieId = this.activatedRoute.snapshot.params.movieId;
     this.http.get<any>(environment.api+environment.paths.movieController.getMovie+'/'+this.movieId).subscribe(res => {
@@ -29,24 +28,11 @@ export class MovieDetailsComponent implements OnInit {
     });
   }
 
-  getTextColor(comment){
-    if(comment.raiting > 3){
-      return 'gold';
-    } else if (comment.raiting <= 3 && comment.raiting > 1){
-      return "green";
-    } else {
-      return "red";
-    }
-  }
-
-  getRaitingText(comment){
-    if(comment.raiting > 3){
-      
-      return 'Great';
-    } else if (comment.raiting <= 3 && comment.raiting > 1){
-      return "Okay";
-    } else {
-      return "Poor";
+  setData(){
+    if(!this.userData.userId && sessionStorage.getItem('userId')){
+      this.userData.setUserId(Number.parseInt(sessionStorage.getItem('userId')));
+      this.userData.setUserName(sessionStorage.getItem('userName'));
+      this.userData.setUserRole(sessionStorage.getItem("userRole"));
     }
   }
 

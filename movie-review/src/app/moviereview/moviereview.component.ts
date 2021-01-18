@@ -11,25 +11,29 @@ import { environment } from 'src/environments/environment';
 export class MoviereviewComponent implements OnInit {
   // userData: UserDataService;
   movieList = [];
-  constructor(private http: HttpClient, private userData: UserDataService) {}
+  constructor(private http: HttpClient, public userData: UserDataService) {}
 
   async ngOnInit() {
-    this.userData.setUserId(Number.parseInt(sessionStorage.getItem('userId')));
-    this.userData.setUserName(sessionStorage.getItem('userName'));
-    this.userData.setUserRole(sessionStorage.getItem('userRole'));
+    if(sessionStorage.getItem('userId')){
+      this.userData.setUserId(Number.parseInt(sessionStorage.getItem('userId')));
+      this.userData.setUserName(sessionStorage.getItem('userName'));
+      this.userData.setUserRole(sessionStorage.getItem('userRole'));
+    }
     console.log('userId: ', this.userData.getUserId())
-    if(this.userData.getUserRole()){
-      // TODO MOVE TO SERVICE
-      this.http.get<any>(environment.api+environment.paths.movieController.movieList).subscribe(res => { 
-        console.log(res);
-        this.movieList = res;
-        console.log(this.movieList)
+    this.http.get<any>(environment.api+environment.paths.movieController.movieList).subscribe(res => { 
+      console.log(res);
+      this.movieList = res;
+      console.log(this.movieList)
     }, error => console.log(error));
 
       console.log(this.movieList)
-    } else {
-      // TODO navigate to unauthorized.
-    }
+    
+  }
+
+  passData(){
+      this.userData.setUserId(Number.parseInt(sessionStorage.getItem('userId')));
+      this.userData.setUserName(sessionStorage.getItem('userName'));
+      this.userData.setUserRole(sessionStorage.getItem('userRole'));
   }
 
   openMovieDetails(movie:any) {

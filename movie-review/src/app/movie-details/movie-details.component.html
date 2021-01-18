@@ -1,44 +1,38 @@
-<div style="margin-left: 4%;">
+<div *ngIf="!isLoading" style="margin-left: 4%;">
     <div>
-      <h1>{{movieDetails.title}}</h1>
+      <h1>{{movieDetails?.title}}</h1>
       <h3>
         Plot:  
       </h3>
-      {{movieDetails.description}}
+      {{movieDetails?.description}}
       
       <h4>Cast & Crew</h4>
       <table>
-        <div *ngFor="let crewMember of movieDetails.crew">
+        <div *ngFor="let crewMember of movieDetails?.crew">
           <td> {{crewMember.name}}</td> <td>{{crewMember.role}}</td> <td>{{crewMember.position}}</td>
         </div>
       </table>
 
       <h4>Genre:</h4>
-      {{movieDetails.genre}}
+      {{movieDetails?.genre}}
       <h4>Language:</h4>
-      {{movieDetails.language}}
+      {{movieDetails?.language}}
       <h4>Release Date:</h4>
-      {{movieDetails.releaseDate | date: 'MM-dd-yyyy'}}
+      {{movieDetails?.releaseDate | date: 'MM-dd-yyyy'}}
     </div>
     <div>
     </div>
     <h3>
       Comments:
     </h3>
-    <mat-card style="margin-top:2%" *ngFor="let comment of movieDetails.comments; index as ci">
-      
-     <mat-card-content><span style="padding-left:2%; margin-right:1%;"><b>{{comment.user.username}}:</b></span>{{comment.comment}}<span><button *ngIf="comment.user.id == userData.getUserId()" mat-button >Edit</button></span></mat-card-content>
+    <mat-card style="margin-top:2%" *ngFor="let comment of movieDetails?.comments; index as ci">
      <mat-card-content style="padding-left:3%;">
-      <h4>Raiting:</h4>
-      <div >
-        <p style="text-indent: 80px;" [ngStyle]="{'color':getTextColor(comment)}">{{getRaitingText(comment)}}</p>
-        <app-raiting [comment]="comment"></app-raiting>
-      </div>
+        <app-raiting [comment]="comment" [userData]="userData"></app-raiting>
     </mat-card-content>
     </mat-card>
 <div style="margin-top: 2%; margin-bottom:10%;">
-  <mat-card style="margin-top:2%" >
-    <mat-card-content><app-raiting *ngIf="AddComment" [addComment]="true" [movieId]="movieId" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
+  <mat-card *ngIf="AddComment"  style="margin-top:2%" >
+    <mat-card-content><app-raiting [userData]="userData" [addComment]="true" [movieId]="movieId" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
   </mat-card>
 </div>
 <button mat-flat-button (click)="addComment()">Add Comment/Review</button>

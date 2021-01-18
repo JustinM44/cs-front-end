@@ -13,7 +13,19 @@
   </div>
 </div>
 <div *ngIf="!addComment">
-  <button mat-icon-button  *ngFor="let rating of ratingsArray;index as i" (click)="updateRating(i)" [disabled]="comment.user.id!=currentUser">
+  <div>
+    
+      <label for="comment_box" style="vertical-align: top;">{{comment.user.username}}: </label><textarea #commentUpdateInput id="comment_box" style="width: 60%;" [disabled]="!isEditing" >{{comment.comment}}</textarea>
+      <button *ngIf="comment.user.id==currentUser && !isEditing" style="float: right;" (click)="setIsEditing()">Edit</button>
+      <button *ngIf="isEditing" style="float:right" (click)="editCommentText(commentUpdateInput.value)">submit</button>
+      <button *ngIf="isEditing" style="float:right" (click)="cancelEdit()">Cancel</button>
+   
+  </div>
+  <div>
+    <h4>Raiting:</h4>
+    <p style="text-indent: 80px;" [ngStyle]="{'color':getTextColor(comment)}">{{getRaitingText(comment)}}</p>
+  </div>
+  <button mat-icon-button  *ngFor="let rating of ratingsArray;index as i" (click)="updateRating(i)" [disabled]="comment.user.id!=currentUser || !isEditing">
   <mat-icon *ngIf="comment.raiting > i" color="accent">
     star
   </mat-icon>
@@ -21,6 +33,5 @@
     star_border
   </mat-icon>
 </button>
-<button mat-button *ngIf="isUpdated && !addComment" (click)="updateComment(comment)">Submit</button>
 </div>
 
