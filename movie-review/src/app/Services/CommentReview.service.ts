@@ -17,7 +17,7 @@ constructor(private http:HttpClient) { }
     return this.http.post<any>(environment.api + environment.paths.movieController.newComment, comment);
   }
 
-  deleteCommentReview(commentId:number){
-    return this.http.delete<any>(environment.api+environment.paths.movieController.deletecommentraiting + commentId);
+  deleteCommentReview(userId:number, comment){
+    return this.http.post<any>(environment.api+environment.paths.movieController.deletecommentraiting + userId, comment);
   }
 }
