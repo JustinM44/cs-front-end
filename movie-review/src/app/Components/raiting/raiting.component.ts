@@ -41,17 +41,6 @@ export class RaitingComponent implements OnInit {
     this.currentTextLength = 0;
     this.oldComment = this.comment.comment;
     this.oldRaiting = this.comment.raiting;
-    
-    if(this.addComment){
-      this.comment = {
-        "user": {
-          "id": this.userData.getUserId()
-        },
-        "raiting": 0,
-        "movieid": Number.parseInt(this.movieId),
-        "comment": ""
-      }
-    }
     this.isUpdated = false;
     for(let index = 0; index < this.MAX_STARS; index++){
       this.ratingsArray.push(index);

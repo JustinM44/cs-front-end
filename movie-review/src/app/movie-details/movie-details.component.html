@@ -32,7 +32,7 @@
     </mat-card>
 <div style="margin-top: 2%; margin-bottom:10%;">
   <mat-card *ngIf="AddComment"  style="margin-top:2%" >
-    <mat-card-content><app-raiting [userData]="userData" [addComment]="true" [movieId]="movieId" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
+    <mat-card-content><app-raiting [userData]="userData" [addComment]="true" [movieId]="movieId" [comment]="newComment" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
   </mat-card>
 </div>
 <button mat-flat-button (click)="addComment()">Add Comment/Review</button>

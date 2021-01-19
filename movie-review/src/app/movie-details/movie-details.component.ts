@@ -16,6 +16,7 @@ export class MovieDetailsComponent implements OnInit {
   movieDetails;
   AddComment: boolean;
   isLoading: boolean;
+  newComment;
 
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, public userData:UserDataService) {}
 
@@ -38,6 +39,16 @@ export class MovieDetailsComponent implements OnInit {
 
   addComment(){
     this.AddComment = true;
+    if(this.addComment){
+      this.newComment = {
+        "user": {
+          "id": this.userData.getUserId()
+        },
+        "raiting": 0,
+        "movieid": this.movieId,
+        "comment": ""
+      };
+    }
   }
 
   commentAdded(result){
