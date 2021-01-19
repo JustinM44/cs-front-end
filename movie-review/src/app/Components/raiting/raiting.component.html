@@ -17,7 +17,7 @@
     
       <label for="comment_box" style="vertical-align: top;">{{comment.user.username}}: </label><textarea #commentUpdateInput id="comment_box" style="width: 60%;" [disabled]="!isEditing" >{{comment.comment}}</textarea>
       <button *ngIf="comment.user.id==currentUser && !isEditing" style="float: right;" (click)="setIsEditing()">Edit</button>
-      <button *ngIf="comment.user.id==currentUser && !isEditing" style="float: right;">Delete</button>
+      <button *ngIf="comment.user.id==currentUser && !isEditing" style="float: right;" (click)="deleteComment(this.comment.id)">Delete</button>
       <button *ngIf="isEditing" style="float:right" (click)="editCommentText(commentUpdateInput.value)">submit</button>
       <button *ngIf="isEditing" style="float:right" (click)="cancelEdit()">Cancel</button>
    

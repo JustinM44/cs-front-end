@@ -14,7 +14,8 @@ export const environment = {
       getMovie: "/api/movies/getMovie",
       movieList: "/api/movies/getMovies",
       newComment: "/api/movies/submitcomment",
-      updatecommentraiting: "/api/movies/submitcommentupdate"
+      updatecommentraiting: "/api/movies/submitcommentupdate",
+      deletecommentraiting: "/api/movies/deleteComponent/"
     }
   }
 

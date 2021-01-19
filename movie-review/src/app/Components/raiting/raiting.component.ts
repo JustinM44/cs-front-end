@@ -129,4 +129,16 @@ export class RaitingComponent implements OnInit {
     this.updateComment();
     this.isEditing=false;
   }
+
+  deleteComment(commentId:number){
+    this.commentService.deleteCommentReview(commentId).subscribe(res => res, (error) =>{
+      if(error.status === 200) {
+        return;
+      }
+      else {
+        console.log(error);
+      }
+    })
+    
+  }
 }
