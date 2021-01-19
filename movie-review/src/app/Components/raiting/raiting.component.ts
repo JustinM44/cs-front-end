@@ -139,7 +139,8 @@ export class RaitingComponent implements OnInit {
       else {
         console.log(error);
       }
-    })
+    });
+    location.reload();
     
   }
 }

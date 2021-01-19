@@ -26,6 +26,7 @@ export class MovieDetailsComponent implements OnInit {
     this.movieId = this.activatedRoute.snapshot.params.movieId;
     this.http.get<any>(environment.api+environment.paths.movieController.getMovie+'/'+this.movieId).subscribe(res => {
       this.movieDetails = res;
+      console.log(res)
     });
   }
 

@@ -9,13 +9,16 @@ import { UserDataService } from './Services/UserData.service';
 })
 export class AppComponent {
   title = 'movie-review';
-  constructor(public userData: UserDataService){}
+  constructor(public userData: UserDataService, private router: Router){}
   ngOninit():void {
 
   }
 
   logout(){
     sessionStorage.clear();
-    location.reload();
+    this.userData.setUserId(null);
+    this.userData.setUserName(null);
+    this.userData.setUserRole(null);
+    this.router.navigate(['']);
   }
 }

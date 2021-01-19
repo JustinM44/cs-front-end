@@ -13,9 +13,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginRequest: FormGroup;
+  isInvalidLogin: boolean
 
   constructor(private formBuilder: FormBuilder, private authservice: AuthService, private router: Router,
-    public userData: UserDataService) { 
+    public userData: UserDataService) 
+    {
+      this.isInvalidLogin = false; 
     this.loginRequest = this.formBuilder.group({
       username: '',
       password: ''
@@ -38,7 +41,12 @@ export class LoginComponent implements OnInit {
 
         this.router.navigate(['/moviereview']);
       }
-    }, (error) => {console.log(error)});
+    }, (error) => {
+      if(error.status === 401){
+        this.isInvalidLogin = true;
+      }
+
+    });
     this.loginRequest.reset();
   }
 }
