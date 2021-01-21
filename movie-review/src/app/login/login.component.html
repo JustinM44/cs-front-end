@@ -1,0 +1,20 @@
+<div class="container" style="justify-content:center; text-align: center;" >
+  <div *ngIf="isInvalidLogin">Invalid login Credentials</div>
+  <form [formGroup]="loginRequest" (ngSubmit)="onSubmit(loginRequest.value)">
+    <div>
+      <h2>Login</h2>
+      <div class="row">
+          <label for="username"><b>Username</b></label>
+          <input type="text" placeholder="Enter username" name="username" formControlName="username" required>
+      </div>
+      <div>
+        <label for="pwd"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="pwd" formControlName="password" required>
+      </div>
+      <div>
+        <button type="submit">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
+

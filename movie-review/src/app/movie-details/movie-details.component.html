@@ -1,0 +1,41 @@
+<div *ngIf="!isLoading" style="margin-left: 4%;">
+    <div>
+      <h1>{{movieDetails?.title}}</h1>
+      <h3>
+        Plot:  
+      </h3>
+      {{movieDetails?.description}}
+      
+      <h4>Cast & Crew</h4>
+      <table>
+        <div *ngFor="let crewMember of movieDetails?.crew">
+          <td> {{crewMember.name}}</td> <td>{{crewMember.role}}</td> <td>{{crewMember.position}}</td>
+        </div>
+      </table>
+
+      <h4>Genre:</h4>
+      {{movieDetails?.genre}}
+      <h4>Language:</h4>
+      {{movieDetails?.language}}
+      <h4>Release Date:</h4>
+      {{movieDetails?.releaseDate | date: 'MM-dd-yyyy'}}
+      <h4>Overall Raiting:</h4>
+      {{movieDetails?.overallRaiting}}
+    </div>
+    <div>
+    </div>
+    <h3>
+      Comments:
+    </h3>
+    <mat-card style="margin-top:2%" *ngFor="let comment of movieDetails?.comments; index as ci">
+     <mat-card-content style="padding-left:3%;">
+        <app-raiting [comment]="comment" [userData]="userData" (childComunicator)="commentChanged($event, ci)"></app-raiting>
+    </mat-card-content>
+    </mat-card>
+<div style="margin-top: 2%; margin-bottom:10%;">
+  <mat-card *ngIf="AddComment"  style="margin-top:2%" >
+    <mat-card-content><app-raiting [userData]="userData" [addComment]="true" [movieId]="movieId" [comment]="newComment" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
+  </mat-card>
+</div>
+<button *ngIf="decodedToken?.userId" mat-flat-button (click)="addComment()">Add Comment/Review</button>
+</div>

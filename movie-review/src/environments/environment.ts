@@ -3,7 +3,23 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  api: "http://localhost:8080",
+  paths: {
+    auth: {
+      login: "/api/authservices/login"
+    },
+    movieController: {
+      getMovie: "/api/movies/getMovie",
+      movieList: "/api/movies/getMovies",
+      newComment: "/api/movies/submitcomment",
+      updatecommentraiting: "/api/movies/submitcommentupdate",
+      deletecommentraiting: "/api/movies/deleteComponent/",
+      updateoverallraiting: "/api/movies/updateRaiting/",
+    }
+  }
+
 };
 
 /*

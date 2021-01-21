@@ -1,0 +1,22 @@
+<div>
+  <input #movieSearch placeholder="Search"><button mat-button (click)="search(movieSearch.value)"><mat-icon>search</mat-icon></button>
+  <div>
+    <div style="justify-content:center; text-align: center;" class="row">
+      <mat-grid-list cols="3" rowHeight="1:1.3">
+        <mat-grid-tile *ngFor="let item of movieList">
+          <mat-card>
+            <mat-card-title id=content><b>Title: </b>{{item.title}}</mat-card-title>
+            <img mat-card-image src="{{item.imageurl}}">
+            <mat-card-content>
+              Overall Rating {{item.overallrating}}
+            </mat-card-content>
+            <mat-card-actions>
+              <button [routerLink]="['/moviedetails', item.id]">View Details</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+        
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
