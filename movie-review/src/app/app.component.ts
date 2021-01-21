@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {RouterModule, Router} from '@angular/router'
+
 import { UserDataService } from './Services/UserData.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,14 @@ import { UserDataService } from './Services/UserData.service';
 })
 export class AppComponent {
   title = 'movie-review';
-  constructor(public userData: UserDataService, private router: Router){}
+  isLoggedIn = false;
+  constructor(private router: Router, public userData:UserDataService){}
   ngOninit():void {
-
+    
   }
 
   logout(){
-    sessionStorage.clear();
+    localStorage.clear();
     this.userData.setUserId(null);
     this.userData.setUserName(null);
     this.userData.setUserRole(null);

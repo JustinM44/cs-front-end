@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { CommentReviewService } from 'src/app/Services/CommentReview.service';
 import { UserDataService } from 'src/app/Services/UserData.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-raiting',
@@ -19,7 +20,7 @@ export class RaitingComponent implements OnInit {
 
   addCommentForm: FormGroup;
 
-  currentUser: number = Number.parseInt(sessionStorage.getItem('userId'));
+  currentUser: number;
   isUpdated;
   isEditing: boolean;
   commentText: string;
@@ -32,12 +33,17 @@ export class RaitingComponent implements OnInit {
 
   MAX_STARS=5;
   ratingsArray = [];
+  decodedToken: {[key:string]: any};
 
-  constructor(private commentService: CommentReviewService) {
+  constructor(private commentService: CommentReviewService,) {
     this.isEditing=false;
    }
 
   ngOnInit() {
+    if(localStorage.getItem('token')){
+      this.decodedToken = jwt_decode(localStorage.getItem('token'));
+      this.currentUser = this.decodedToken.userId;
+    }
     this.currentTextLength = 0;
     this.oldComment = this.comment.comment;
     this.oldRaiting = this.comment.raiting;
@@ -63,6 +69,7 @@ export class RaitingComponent implements OnInit {
       }
     });
     this.isUpdated=false;
+    this.messageParent('updateRaiting')
     
   }
 
@@ -76,18 +83,21 @@ export class RaitingComponent implements OnInit {
         console.log(error);
       }
     });
-      this.messageParent()
+      this.messageParent(null)
   }
 
-  messageParent(){
-    console.log('Messaging userName: ', this.userData.userName)
-    this.comment.user.username = this.userData.getUserName();
-    this.addComment = false
-    let parentMessage = {
-      comment: this.comment,
-      closeAdd: !this.addComment
-    };
+  messageParent(message){
+    this.comment.user.username = this.decodedToken.userName;
+    if(this.addComment){
+      this.addComment = false
+      let parentMessage = {
+        comment: this.comment,
+        closeAdd: !this.addComment
+      };
     this.childComunicator.emit(parentMessage);
+    } else if(message){
+      this.childComunicator.emit(message);
+    } 
   }
 
   calculateTextLength(length): void{
@@ -107,7 +117,6 @@ export class RaitingComponent implements OnInit {
 
   getRaitingText(comment){
     if(comment.raiting > 3){
-      
       return 'Great';
     } else if (comment.raiting <= 3 && comment.raiting > 1){
       return "Okay";
@@ -127,12 +136,12 @@ export class RaitingComponent implements OnInit {
   editCommentText(commentText){
     this.comment.comment = commentText;
     this.updateComment();
-    this.isEditing=false;
+    this.setIsEditing();
   }
 
   deleteComment(){
-    let userId = Number.parseInt(sessionStorage.getItem('userId'));
-    this.commentService.deleteCommentReview(userId, this.comment).subscribe(res => res, (error) =>{
+    
+    this.commentService.deleteCommentReview(this.decodedToken.userId, this.comment).subscribe(res => res, (error) =>{
       if(error.status === 200) {
         return;
       }
@@ -140,7 +149,6 @@ export class RaitingComponent implements OnInit {
         console.log(error);
       }
     });
-    location.reload();
-    
+    this.messageParent('deleted');
   }
 }

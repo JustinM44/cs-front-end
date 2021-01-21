@@ -1,5 +1,6 @@
 mat-card{
-    max-width: 70%;
+    max-width: 60%;
+    max-height: 100%;
 }
 
 .movieCard{
@@ -21,6 +22,6 @@ mat-card{
     width:100%;
     padding-top: 1%;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     }

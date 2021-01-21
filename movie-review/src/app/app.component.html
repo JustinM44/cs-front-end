@@ -6,8 +6,8 @@
     <mat-icon>home</mat-icon>
   </button>
   <mat-menu #loginMenu>
-    <button mat-menu-item [routerLink]="['/login']" *ngIf="!userData.getUserId()">Login</button>
-    <button mat-menu-item (click)="logout()" *ngIf="userData.getUserId()">Logout</button>
+    <button mat-menu-item [routerLink]="['/login']">Login</button>
+    <button mat-menu-item (click)="logout()" >Logout</button>
   </mat-menu>
 </mat-toolbar>
 <div>

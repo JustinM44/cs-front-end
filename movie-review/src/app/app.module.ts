@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list'
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { RaitingComponent } from './Components/raiting/raiting.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { AuthInterceptorService } from './Services/AuthInterceptor.service';
 
 @NgModule({
   declarations: [			
@@ -40,9 +42,10 @@ import { RaitingComponent } from './Components/raiting/raiting.component';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatFormFieldModule
   ],
-  providers: [UserDataService],
+  providers: [UserDataService, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

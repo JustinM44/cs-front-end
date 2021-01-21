@@ -29,7 +29,7 @@
     </h3>
     <mat-card style="margin-top:2%" *ngFor="let comment of movieDetails?.comments; index as ci">
      <mat-card-content style="padding-left:3%;">
-        <app-raiting [comment]="comment" [userData]="userData"></app-raiting>
+        <app-raiting [comment]="comment" [userData]="userData" (childComunicator)="commentChanged($event, ci)"></app-raiting>
     </mat-card-content>
     </mat-card>
 <div style="margin-top: 2%; margin-bottom:10%;">
@@ -37,5 +37,5 @@
     <mat-card-content><app-raiting [userData]="userData" [addComment]="true" [movieId]="movieId" [comment]="newComment" (childComunicator)="commentAdded($event)"></app-raiting></mat-card-content>
   </mat-card>
 </div>
-<button mat-flat-button (click)="addComment()">Add Comment/Review</button>
+<button *ngIf="decodedToken?.userId" mat-flat-button (click)="addComment()">Add Comment/Review</button>
 </div>
