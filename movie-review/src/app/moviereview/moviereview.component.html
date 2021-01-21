@@ -6,7 +6,7 @@
         <mat-grid-tile *ngFor="let item of movieList">
           <mat-card>
             <mat-card-title id=content><b>Title: </b>{{item.title}}</mat-card-title>
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            <img mat-card-image src="{{item.imageurl}}">
             <mat-card-content>
               Overall Rating {{item.overallrating}}
             </mat-card-content>

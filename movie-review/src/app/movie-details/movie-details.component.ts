@@ -42,7 +42,7 @@ export class MovieDetailsComponent implements OnInit {
     if(this.addComment){
       this.newComment = {
         "user": {
-          "id": this.userData.getUserId()
+          "id": this.decodedToken.userId
         },
         "raiting": 0,
         "movieid": this.movieId,
